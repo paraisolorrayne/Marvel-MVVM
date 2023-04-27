@@ -20,9 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.windowScene = windowScene
         
-        let viewModel: ComicsViewModelProtocol = ComicsViewModel(
-            networkService: NetworkCore()
-        )
+        let viewModel: ComicsViewModelProtocol = ComicsViewModel()
         
         window?.rootViewController = UINavigationController(
             rootViewController: ComicsViewController(

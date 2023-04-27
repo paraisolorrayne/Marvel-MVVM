@@ -1,37 +1,21 @@
 import Foundation
 
-struct ListComicsRequest: DataRequest {
+struct ListComicsRequest: APIRequest {
+    typealias Response = [Comics]
 
-    var url: String {
-        let baseURL: String = APIContants().baseURL
-        let limit = "15"
-        var path: String = ""
-        path = "/comics?format=comic&formatType=comic&noVariants=false&dateRange=2022-01-01%2C2023-01-01&orderBy=title&limit=\(limit)"
-        return baseURL + path
+    var resourceName: String {
+        return "comics"
     }
-    
-    var headers: [String : String] {
-        [:]
-    }
-    
-    var queryItems: [String : String] {
-        [
-            "apikey": APIContants().publicKey
-        ]
-    }
-    
-    var method: HTTPMethod {
-        .get
-    }
-    
-    func decode(_ data: Data) throws -> [Comics] {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-mm-dd"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        
-        let response = try decoder.decode(ComicsResponse.self, from: data)
-        return response.results
+
+    // Parameters
+    let format: String? = "comic"
+    let limit: Int?
+    let offset: Int?
+
+    // Note that nil parameters will not be used
+    init(limit: Int? = nil,
+                offset: Int? = nil) {
+        self.limit = limit
+        self.offset = offset
     }
 }

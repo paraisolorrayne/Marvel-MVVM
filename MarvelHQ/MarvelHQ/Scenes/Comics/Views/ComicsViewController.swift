@@ -3,6 +3,18 @@ import UIKit
 
 final class ComicsViewController: UIViewController {
     
+    private let tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        //table.register(MTCollectionViewTableViewCell.self, forCellReuseIdentifier: MTCollectionViewTableViewCell.identifier)
+        tableView.backgroundView = nil
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorStyle = .none
+        tableView.tableFooterView = UIView()
+        tableView.rowHeight = 120.0
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
     private let viewModel: ComicsViewModelProtocol
     
     init(viewModel: ComicsViewModelProtocol) {
@@ -10,61 +22,54 @@ final class ComicsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-
+    // MARK: LIFECYCLE
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        fetchMovies()
+        fetchComicList()
         bindViewModelEvent()
     }
-    
-    private func configureView() {
-        view.backgroundColor = .white
-        
-//        tableView.separatorStyle = .none
-//        tableView.tableFooterView = UIView()
-//        tableView.rowHeight = 120.0
-//        tableView.register(
-//            PopularMovieCell.self,
-//            forCellReuseIdentifier: PopularMovieCell.cellIdentifier
-//        )
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+}
+
+extension ComicsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.comics.count
     }
     
-    private func fetchMovies() {
-        viewModel.fetchMovie()
-    }
-    
-    private func bindViewModelEvent() {
-        viewModel.onFetchMovieSucceed = { [weak self] in
-            DispatchQueue.main.async {
-                //self?.tableView.reloadData()
-            }
-        }
-        
-        viewModel.onFetchMovieFailure = { error in
-            print(error)
-        }
-    }
-    
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        viewModel.movies.count
-//    }
-//
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularMovieCell.cellIdentifier, for: indexPath) as? PopularMovieCell else {
 //            return UITableViewCell()
 //        }
-//
-//        let movie = viewModel.movies[indexPath.row]
-//        cell.bindViewWith(
-//            viewModel: PopularMovieDefaultViewModel(
-//                movie: movie
-//            )
-//        )
-//
-//        return cell
-//    }
+        
+        return UITableViewCell()
+    }
+}
+private extension ComicsViewController {
+    private func configureView() {
+        view.backgroundColor = .white
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    private func fetchComicList() {
+        viewModel.fetchComicList()
+    }
+    
+    private func bindViewModelEvent() {
+        viewModel.onFetchComicSucceed = { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+        
+        viewModel.onFetchComicFailure = { error in
+            print(error)
+        }
+    }
 }
