@@ -14,9 +14,18 @@ final class ComicsViewModel: ComicsViewModelProtocol {
     var comics: [Comics] = []
     var onFetchComicSucceed: (() -> Void)?
     var onFetchComicFailure: ((Error) -> Void)?
+    var userIdentifier: String
+    var fullName: PersonNameComponents?
+    var email: String?
 
     private let apiClient = MarvelAPIClient(publicKey: APIContants().publicKey,
                                             privateKey: APIContants().privateKey)
+
+    init(userIdentifier: String, fullName: PersonNameComponents?, email: String?) {
+        self.userIdentifier = userIdentifier
+        self.fullName = fullName
+        self.email = email
+    }
 
     func fetchComicByTitle(title: String) {
         apiClient.send(ListComicsTitleRequest(titleStartsWith: title, format: .digital)) { [weak self] response in

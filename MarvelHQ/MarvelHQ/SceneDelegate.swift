@@ -1,11 +1,6 @@
-//
-//  SceneDelegate.swift
-//  MarvelHQ
-//
-//  Created by Lorrayne Paraiso on 22/04/23.
-//
-
 import UIKit
+import FirebaseCore
+import AuthenticationServices
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -13,6 +8,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        FirebaseApp.configure()
         guard let windowScene = (scene as? UIWindowScene) else {
             return
         }
@@ -20,13 +16,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.windowScene = windowScene
         
-        let viewModel: ComicsViewModelProtocol = ComicsViewModel()
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { [self] (credentialState, error) in
+            switch credentialState {
+            case .authorized:
+                let viewModel: ComicsViewModelProtocol = ComicsViewModel(userIdentifier: "", fullName: nil, email: "")
+                
+                window?.rootViewController = UINavigationController(
+                    rootViewController: ComicsViewController(
+                        viewModel: viewModel
+                    )
+                )
+            case .revoked, .notFound:
+                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                DispatchQueue.main.async { [self] in
+                    let loginViewController = LoginViewController()
+                    loginViewController.modalPresentationStyle = .formSheet
+                    loginViewController.isModalInPresentation = true
+                    window?.rootViewController = UINavigationController(
+                        rootViewController: loginViewController
+                    )
+                }
+            default:
+                break
+            }
+        }
         
-        window?.rootViewController = UINavigationController(
-            rootViewController: ComicsViewController(
-                viewModel: viewModel
-            )
-        )
+        
         
         window?.makeKeyAndVisible()
     }
