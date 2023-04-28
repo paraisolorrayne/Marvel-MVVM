@@ -31,6 +31,8 @@
 		39657A4329FA0EC100965075 /* MarvelResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39657A4229FA0EC100965075 /* MarvelResponse.swift */; };
 		39657A4629FA0EF100965075 /* DataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39657A4529FA0EF100965075 /* DataContainer.swift */; };
 		39657A4829FA100800965075 /* ComicsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39657A4729FA100800965075 /* ComicsResponse.swift */; };
+		39657A4A29FC026100965075 /* ComicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39657A4929FC026100965075 /* ComicCollectionViewCell.swift */; };
+		39657A4C29FC035C00965075 /* ComicDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39657A4B29FC035C00965075 /* ComicDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		39657A4229FA0EC100965075 /* MarvelResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelResponse.swift; sourceTree = "<group>"; };
 		39657A4529FA0EF100965075 /* DataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataContainer.swift; sourceTree = "<group>"; };
 		39657A4729FA100800965075 /* ComicsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsResponse.swift; sourceTree = "<group>"; };
+		39657A4929FC026100965075 /* ComicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicCollectionViewCell.swift; sourceTree = "<group>"; };
+		39657A4B29FC035C00965075 /* ComicDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				39657A3129F7FF2F00965075 /* ComicsViewController.swift */,
+				39657A4929FC026100965075 /* ComicCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -229,6 +234,7 @@
 			children = (
 				39657A3829F80B4F00965075 /* Comics.swift */,
 				39657A4729FA100800965075 /* ComicsResponse.swift */,
+				39657A4B29FC035C00965075 /* ComicDTO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -385,7 +391,9 @@
 				39657A1F29F4A91500965075 /* DataRequest.swift in Sources */,
 				39657A4629FA0EF100965075 /* DataContainer.swift in Sources */,
 				39657A3029F7FEAB00965075 /* ComicsViewModel.swift in Sources */,
+				39657A4A29FC026100965075 /* ComicCollectionViewCell.swift in Sources */,
 				39657A3D29FA072B00965075 /* md5Digest.swift in Sources */,
+				39657A4C29FC035C00965075 /* ComicDTO.swift in Sources */,
 				396579E829F49E1D00965075 /* AppDelegate.swift in Sources */,
 				396579EA29F49E1D00965075 /* SceneDelegate.swift in Sources */,
 				39657A3F29FA0D4600965075 /* ListComicsTitleRequest.swift in Sources */,

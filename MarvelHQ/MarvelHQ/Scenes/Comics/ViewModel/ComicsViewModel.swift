@@ -6,6 +6,7 @@ protocol ComicsViewModelProtocol: AnyObject {
     var onFetchComicFailure: ((Error) -> Void)? { set get }
     func fetchComicByTitle(title: String)
     func fetchComicList()
+    func getModelForCell(index: Int) -> ComicDTO.Resume
 }
 
 final class ComicsViewModel: ComicsViewModelProtocol {
@@ -41,5 +42,10 @@ final class ComicsViewModel: ComicsViewModelProtocol {
                 self?.onFetchComicFailure?(error)
             }
         }
+    }
+
+    func getModelForCell(index: Int) -> ComicDTO.Resume {
+        let image = comics[index].thumbnail?.url.description ?? ""
+        return ComicDTO.Resume.init(image: image, title: comics[index].title ?? "")
     }
 }
