@@ -10,9 +10,10 @@ import AuthenticationServices
 
 final class LoginViewController: UIViewController {
     
-    private lazy var loginProviderStackView: UIStackView = {
-        let stackView = UIStackView()
-        return stackView
+    private lazy var loginAuthorizationButton: ASAuthorizationAppleIDButton = {
+        let authorizationButton = ASAuthorizationAppleIDButton()
+        authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
+        return authorizationButton
     }()
     
     override func viewDidLoad() {
@@ -27,9 +28,10 @@ final class LoginViewController: UIViewController {
     
     /// - Tag: add_appleid_button
     func setupProviderLoginView() {
-        let authorizationButton = ASAuthorizationAppleIDButton()
-        authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
-        self.loginProviderStackView.addArrangedSubview(authorizationButton)
+        view.addSubview(loginAuthorizationButton)
+        loginAuthorizationButton.translatesAutoresizingMaskIntoConstraints = false
+        loginAuthorizationButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loginAuthorizationButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     // - Tag: perform_appleid_password_request
